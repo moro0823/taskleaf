@@ -42,4 +42,8 @@ class TasksController < ApplicationController
     def set_task
       @task = current_user.tasks.find(params[:id])
     end
+
+    def task_logger
+      @task_logger ||= Logger.new("log/task.log", "daily")
+    end
 end
