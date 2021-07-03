@@ -18,8 +18,8 @@ h1 タスク一覧
 table.table.table-hover 
   thead.thead-defalt 
     tr 
-      th = Task.human_attribute_name(:name)
-      th = Task.human_attribute_name(:name)
+      th = sort_link(@q, :name)
+      th = Task.human_attribute_name(:created_at)
       th
   tbody 
     - @tasks.each do |task|
