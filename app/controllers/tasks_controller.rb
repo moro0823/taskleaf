@@ -2,7 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :update, :destroy, :edit]
 
   def index
-    @tasks = current_user.tasks.recent
+    @q = current_user.tasks.ransack(params[:q])
+    @tasks = @q.result(distinct: true).recent
   end
 
   def show
@@ -24,7 +25,7 @@ class TasksController < ApplicationController
       render :new
       return
     end
-    
+
     if @task.save
       redirect_to task_path(@task), notice: "タスク「#{@task.name}」を登録しました"
     else

@@ -7,6 +7,14 @@ class Task < ApplicationRecord
 
   scope :recent, -> {order(created_at: :desc)}
 
+  def self.ransack_atributes(auth_object = nil)
+    %w[name created_at]
+  end
+
+  def self.ransack_associatinos(auth_object = nil)
+    []
+  end
+  
   private
   #nameカラムに,を入れないバリデーション
   def validate_name_not_including_comma
