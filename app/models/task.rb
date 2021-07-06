@@ -35,6 +35,19 @@ class Task < ApplicationRecord
       end
     end
   end
+
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+    #CSV.foreachを使ってCSVファイルを１行ずつ読み込む
+      task = new
+      #csv１行ごとにTaskインスタンスを生成する
+      task.attributes = row.to_hash.slice(*csv_attributes)
+      #to_hashメソッドを呼ぶことで{"属性１のヘッダ名"=>"属性１の値", "属性2のヘッダ名"=>"属性2の値"}という形に変換
+      #slice(*csv_attributes)はslice("name","description", "created_at", "updated_at")を記述しているのと同じ意味
+      #slice 指定した安全なキーに対応するデータだけを取り出して入力に用いる
+      task.save!
+    end
+  end
   
   private
   #nameカラムに,を入れないバリデーション
