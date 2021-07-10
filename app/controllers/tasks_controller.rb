@@ -55,7 +55,6 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    head :no_content
   end
 
   private
